@@ -2,7 +2,7 @@ name: Smoke
 
 on:
   push:
-    branches: [ master ]
+    branches: [ * ]
     paths-ignore:
       - 'docs/**'
 
@@ -45,15 +45,3 @@ jobs:
 
     - name: Test
       run: dotnet test --no-build --configuration Debug --nologo
-
-    - name: Pack
-      run: dotnet pack --output ./artifacts --no-build --configuration Debug --nologo --version-suffix build${{ github.run_number }}
-
-    - name: Save
-      if: matrix.os == 'ubuntu-latest'
-      uses: actions/upload-artifact@v2
-      with:
-        name: Artifacts
-        path: |
-          ./artifacts
-          !**/*.snupkg
